@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Destructible
+  - Indestructible
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Stage
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Brick
+    uniqueID: 4209079223
+    locked: 0
+  - name: Bomb
+    uniqueID: 3001610737
+    locked: 0
+  - name: Explosion
+    uniqueID: 2009111563
+    locked: 0
+  - name: Item
+    uniqueID: 440599103
+    locked: 0
+  - name: Player
+    uniqueID: 2973924161
+    locked: 0
