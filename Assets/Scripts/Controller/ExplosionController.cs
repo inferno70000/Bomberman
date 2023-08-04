@@ -39,7 +39,7 @@ public class ExplosionController : AbstractMonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<PlayerController>().SetIsDead(true);
+            collision.GetComponent<CharacterController>().SetIsDead(true);
         }
     }
 }

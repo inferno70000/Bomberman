@@ -9,9 +9,9 @@ public class ItemController : MonoBehaviour
 
     public ItemName ItemName { get => itemName; set => itemName = value; }
 
-    protected virtual void SetAttribute(PlayerController playerController)
+    protected virtual void SetAttribute(CharacterController characterController)
     {
-        if (playerController == null)
+        if (characterController == null)
         {
             return;
         }
@@ -19,13 +19,14 @@ public class ItemController : MonoBehaviour
         switch(itemName)
         {
             case ItemName.ItemBlastRadius:
-                playerController.SetBombRadius(playerController.BombRadius + 1);
+                characterController.SetBombRadius(characterController.BombRadius + 1);
                 break;
             case ItemName.ItemExtraBomb:
-                playerController.SetBombAmount(playerController.BombAmount + 1);
+                characterController.SetBombAmount(characterController.BombAmount + 1);
                 break;
             case ItemName.ItemSpeedIncrease:
-                playerController.SetSpeed(playerController.Speed + 1);
+                Debug.Log("Speed item");
+                characterController.SetSpeed(characterController.Speed + 1);
                 break;
         }
 
@@ -34,9 +35,9 @@ public class ItemController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") || collision.CompareTag("Bot"))
         {
-            SetAttribute(collision.GetComponent<PlayerController>());
+            SetAttribute(collision.GetComponent<CharacterController>());
         }
     }
 }

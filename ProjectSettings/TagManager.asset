@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Destructible
   - Indestructible
+  - Bot
   layers:
   - Default
   - TransparentFX
@@ -14,8 +15,8 @@ TagManager:
   - Water
   - UI
   - Stage
-  - 
-  - 
+  - Player
+  - Bot
   - 
   - 
   - 

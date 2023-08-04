@@ -45,6 +45,8 @@ public class ExplosionSpawner : Spawner
         ExplodeDirection(length, position, rotation, Vector2.right);
         ExplodeDirection(length, position, rotation, Vector2.down);
         ExplodeDirection(length, position, rotation, Vector2.left);
+
+        NavMeshManager.Instance.BakeNav();
     }
     protected virtual void ExplodeDirection(int length, Vector2 position, Quaternion rotation, Vector2 direction)
     {
