@@ -6,11 +6,11 @@ using NavMeshPlus.Components;
 public class NavMeshManager : AbstractMonoBehaviour
 {
     [Header("NavMesh Manager")]
-    
+
     [SerializeField] NavMeshSurface surface2D;
 
-    private static NavMeshManager instance; 
-    public static NavMeshManager Instance {  get { return instance; } }
+    private static NavMeshManager instance;
+    public static NavMeshManager Instance { get { return instance; } }
 
     protected override void Awake()
     {
@@ -33,5 +33,13 @@ public class NavMeshManager : AbstractMonoBehaviour
     public void BakeNav()
     {
         surface2D.BuildNavMesh();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            surface2D.BuildNavMesh();
+        }
     }
 }

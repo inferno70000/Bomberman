@@ -9,6 +9,8 @@ public class BombController : AbstractMonoBehaviour
     [SerializeField] protected CircleCollider2D circleCollider2D;
     [SerializeField] protected float timeFuse = 3f;
     [SerializeField] private int length = 2;
+    [SerializeField]
+    private List<GameObject> characters = new();
 
     protected int Length { get => length; }
 
@@ -25,9 +27,22 @@ public class BombController : AbstractMonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Bot") || collision.CompareTag("Player"))
+        {
+            characters.Add(collision.gameObject);
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.CompareTag("Bot") || collision.CompareTag("Player"))
+        {
+            characters.Remove(collision.gameObject);
+        }
+
+        if (characters.Count == 0)
         {
             circleCollider2D.isTrigger = false;
         }

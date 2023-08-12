@@ -27,6 +27,7 @@ public abstract class Spawner : AbstractMonoBehaviour
         }
     }
 
+    //Spawn first game object in prefabs
     public virtual Transform Spawn(Vector2 position, Quaternion rotation)
     {
         Transform newPrefab = Spawn(prefabs[0].name, position, rotation);
@@ -34,6 +35,7 @@ public abstract class Spawner : AbstractMonoBehaviour
         return newPrefab;
     }
 
+    //Spawn game object with specific name
     public virtual Transform Spawn(string prefabName, Vector2 position, Quaternion rotation)
     {
         position.x = Mathf.Round(position.x);

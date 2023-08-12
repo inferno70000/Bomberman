@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerController : CharacterController
 {
+    [Header("Player")]
+    [SerializeField] private bool isInvincible = false;
+
     private void Update()
     {
         if (InputManager.Instance.GetBombKey())
@@ -19,5 +22,15 @@ public class PlayerController : CharacterController
         Debug.Log(speed);
 
         movement.SetSpeed(speed);
+    }
+
+    public override void SetIsDead(bool isDead)
+    {
+        if (isInvincible)
+        {
+            return;
+        }
+
+        base.SetIsDead(isDead);
     }
 }

@@ -31,6 +31,8 @@ public abstract class CharacterController : AbstractMonoBehaviour
         {
             Transform newBomb = BombSpawner.Instance.Spawn(transform.position, transform.rotation);
 
+            PreExplosionSpawner.Instance.SpawnPreExplodeBox(bombRadius, transform.position, transform.rotation);
+
             newBomb?.GetComponent<BombController>()?.SetLength(bombRadius);
         }
     }
