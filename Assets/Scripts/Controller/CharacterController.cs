@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.WSA;
 
 public abstract class CharacterController : AbstractMonoBehaviour
 {
@@ -11,6 +12,8 @@ public abstract class CharacterController : AbstractMonoBehaviour
     [SerializeField] protected int bombAmount = 1;
     [SerializeField] protected int bombRadius = 1;
     [SerializeField] protected bool isDead = false;
+    
+    protected List<Transform> boomHolder = new();
 
     public int BombAmount { get => bombAmount; }
     public int BombRadius { get => bombRadius; }
@@ -29,18 +32,28 @@ public abstract class CharacterController : AbstractMonoBehaviour
     {
         if (InputManager.Instance.GetBombKey())
         {
-            Transform newBomb = BombSpawner.Instance.Spawn(transform.position, transform.rotation);
+            if (CountBombActive() < BombAmount)
+            {
+                Transform newBomb = BombSpawner.Instance.Spawn(transform.position, transform.rotation);
 
-            PreExplosionSpawner.Instance.SpawnPreExplodeBox(bombRadius, transform.position, transform.rotation);
+                PreExplosionSpawner.Instance.SpawnPreExplodeBox(bombRadius, transform.position, transform.rotation);
 
-            newBomb?.GetComponent<BombController>()?.SetLength(bombRadius);
+                newBomb?.GetComponent<BombController>()?.SetLength(bombRadius);
+
+                if (boomHolder.Exists(x => x == newBomb) || newBomb == null)
+                {
+                    return;
+                }
+                
+                boomHolder.Add(newBomb);
+            }
         }
     }
 
     public void SetBombAmount(int bombAmount)
     {
         this.bombAmount = bombAmount;
-        BombSpawner.Instance.SetBombLimit(bombAmount);
+        //BombSpawner.Instance.SetBombLimit(bombAmount);
     }
 
     public void SetBombRadius(int bombRadius)
@@ -53,5 +66,19 @@ public abstract class CharacterController : AbstractMonoBehaviour
     public virtual void SetIsDead(bool isDead)
     {
         this.isDead = isDead;
+    }
+
+    protected virtual int CountBombActive()
+    {
+        int count = 0;
+        foreach (Transform prefab in boomHolder)
+        {
+            if (prefab.gameObject.activeSelf)
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 }

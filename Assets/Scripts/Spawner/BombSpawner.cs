@@ -8,10 +8,10 @@ public class BombSpawner : Spawner
     [Header("Bomb Spawner")]
 
     private static BombSpawner instance;
-    [SerializeField] private int bombLimit = 1;
+    //[SerializeField] private int bombLimit = 1;
 
     public static BombSpawner Instance { get => instance; }
-    protected int BombLimit { get => bombLimit; }
+    //protected int BombLimit { get => bombLimit; }
 
     protected override void Awake()
     {
@@ -35,12 +35,15 @@ public class BombSpawner : Spawner
         }
     }
 
+    /// <summary>
+    /// spawn a boom if meeting conditions, else return null
+    /// </summary>
     public override Transform Spawn(Vector2 position, Quaternion rotation)
     {
-        if (CountBombActive() >= bombLimit)
-        {
-            return null;
-        }
+        //if (CountBombActive() >= bombLimit)
+        //{
+        //    return null;
+        //}
 
         position.x = Mathf.Round(position.x);
         position.y = Mathf.Round(position.y);
@@ -53,8 +56,9 @@ public class BombSpawner : Spawner
         return base.Spawn(position, rotation);
     }
 
-
-    //Check if position existed a bomb
+    /// <summary>
+    /// Check if position existed a bomb
+    /// </summary>
     protected virtual bool IsBombExisted(Vector2 position)
     {
         foreach (Transform prefab in holder)
@@ -68,22 +72,22 @@ public class BombSpawner : Spawner
         return false;
     }
 
-    protected virtual int CountBombActive()
-    {
-        int count = 0;
-        foreach(Transform prefab in holder)
-        {
-            if (prefab.gameObject.activeSelf)
-            {
-                count++;
-            }
-        }
+    //protected virtual int CountBombActive()
+    //{
+    //    int count = 0;
+    //    foreach(Transform prefab in holder)
+    //    {
+    //        if (prefab.gameObject.activeSelf)
+    //        {
+    //            count++;
+    //        }
+    //    }
 
-        return count;
-    }
+    //    return count;
+    //}
 
-    public virtual void SetBombLimit(int bombLimit)
-    {
-        this.bombLimit = bombLimit;
-    }
+    //public virtual void SetBombLimit(int bombLimit)
+    //{
+    //    this.bombLimit = bombLimit;
+    //}
 }
