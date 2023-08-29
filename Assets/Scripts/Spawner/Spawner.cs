@@ -46,6 +46,18 @@ public abstract class Spawner : AbstractMonoBehaviour
         SetPrefab(newPrefab, prefabName, position, rotation);
 
         return newPrefab;
+    }  
+    
+    public virtual Transform Spawn(string prefabName, Transform parent, Vector2 position, Quaternion rotation)
+    {
+        position.x = Mathf.Round(position.x);
+        position.y = Mathf.Round(position.y);
+
+        Transform newPrefab = GetPrefabByName(prefabName);
+
+        SetPrefab(newPrefab, parent, prefabName, position, rotation);
+
+        return newPrefab;
     }
 
     protected virtual Transform GetPrefabByName(string prefabName)
@@ -88,4 +100,11 @@ public abstract class Spawner : AbstractMonoBehaviour
         prefab.gameObject.SetActive(true);
         prefab.SetParent(transform.Find("Holder"));
     }
+    
+    protected virtual void SetPrefab(Transform prefab, Transform parent, string prefabName, Vector2 position, Quaternion rotation)
+    {
+        SetPrefab(prefab, prefabName, position, rotation);
+        prefab.SetParent(parent);
+    }
+
 }

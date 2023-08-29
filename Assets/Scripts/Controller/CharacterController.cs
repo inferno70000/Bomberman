@@ -12,7 +12,7 @@ public abstract class CharacterController : AbstractMonoBehaviour
     [SerializeField] protected int bombAmount = 1;
     [SerializeField] protected int bombRadius = 1;
     [SerializeField] protected bool isDead = false;
-    
+
     protected List<Transform> boomHolder = new();
 
     public int BombAmount { get => bombAmount; }
@@ -28,32 +28,28 @@ public abstract class CharacterController : AbstractMonoBehaviour
         }
     }
 
-    protected virtual void PlaceBomb()
+    public virtual void PlaceBomb()
     {
-        if (InputManager.Instance.GetBombKey())
+        if (CountBombActive() < BombAmount)
         {
-            if (CountBombActive() < BombAmount)
+            Transform newBomb = BombSpawner.Instance.Spawn(transform.position, transform.rotation);
+
+            PreExplosionSpawner.Instance.SpawnPreExplodeBox(bombRadius, transform.position, transform.rotation);
+
+            newBomb?.GetComponent<BombController>()?.SetLength(bombRadius);
+
+            if (boomHolder.Exists(x => x == newBomb) || newBomb == null)
             {
-                Transform newBomb = BombSpawner.Instance.Spawn(transform.position, transform.rotation);
-
-                PreExplosionSpawner.Instance.SpawnPreExplodeBox(bombRadius, transform.position, transform.rotation);
-
-                newBomb?.GetComponent<BombController>()?.SetLength(bombRadius);
-
-                if (boomHolder.Exists(x => x == newBomb) || newBomb == null)
-                {
-                    return;
-                }
-                
-                boomHolder.Add(newBomb);
+                return;
             }
+
+            boomHolder.Add(newBomb);
         }
     }
 
     public void SetBombAmount(int bombAmount)
     {
         this.bombAmount = bombAmount;
-        //BombSpawner.Instance.SetBombLimit(bombAmount);
     }
 
     public void SetBombRadius(int bombRadius)

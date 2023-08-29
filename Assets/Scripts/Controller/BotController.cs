@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class BotController : CharacterController
@@ -33,6 +34,8 @@ public class BotController : CharacterController
     void Update()
     {
         currentState = currentState.Process();
+
+        //Debug.Log(agent.pathStatus);
 
         // Update the way to the goal every second.
         //elapsed += Time.deltaTime;

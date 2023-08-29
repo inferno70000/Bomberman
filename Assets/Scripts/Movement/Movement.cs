@@ -8,7 +8,9 @@ public class Movement : AbstractMonoBehaviour
     [Header("Movement")]
 
     [SerializeField] protected float speed = 5f;
-    [SerializeField] protected new Rigidbody2D rigidbody2D;
+
+    protected new Rigidbody2D rigidbody2D;
+    protected CharacterController characterController;
 
     public float Speed { get => speed; }
 
@@ -18,11 +20,19 @@ public class Movement : AbstractMonoBehaviour
         {
             rigidbody2D = GetComponent<Rigidbody2D>();
         }
+
+        if (characterController == null)
+        {
+            characterController = GetComponent<CharacterController>();
+        }
     }
 
     void FixedUpdate()
     {
-        Move();
+        if (!characterController.IsDead)
+        {
+            Move();
+        }
     }
 
     protected virtual void Move()
@@ -33,6 +43,6 @@ public class Movement : AbstractMonoBehaviour
 
     public virtual void SetSpeed(float speed)
     {
-        this.speed = speed; 
+        this.speed = speed;
     }
 }

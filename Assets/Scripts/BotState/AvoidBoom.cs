@@ -40,8 +40,6 @@ public class AvoidBoom : MonoBehaviour
         // Find a new position outside the collider
         Vector3 newPosition = FindNewPositionOutsideCollider();
 
-        Debug.Log(newPosition);
-
         // Move the agent to the new position
         agent.SetDestination(newPosition);
     }

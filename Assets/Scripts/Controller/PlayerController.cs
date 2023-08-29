@@ -7,6 +7,15 @@ public class PlayerController : CharacterController
     [Header("Player")]
     [SerializeField] private bool isInvincible = false;
 
+    protected override void LoadComponent()
+    {
+        base.LoadComponent();
+
+#if UNITY_EDITOR
+        isInvincible=true;
+#endif
+    }
+
     private void Update()
     {
         if (InputManager.Instance.GetBombKey())

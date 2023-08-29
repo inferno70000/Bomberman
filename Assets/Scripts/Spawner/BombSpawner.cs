@@ -8,10 +8,8 @@ public class BombSpawner : Spawner
     [Header("Bomb Spawner")]
 
     private static BombSpawner instance;
-    //[SerializeField] private int bombLimit = 1;
 
     public static BombSpawner Instance { get => instance; }
-    //protected int BombLimit { get => bombLimit; }
 
     protected override void Awake()
     {
@@ -72,22 +70,4 @@ public class BombSpawner : Spawner
         return false;
     }
 
-    //protected virtual int CountBombActive()
-    //{
-    //    int count = 0;
-    //    foreach(Transform prefab in holder)
-    //    {
-    //        if (prefab.gameObject.activeSelf)
-    //        {
-    //            count++;
-    //        }
-    //    }
-
-    //    return count;
-    //}
-
-    //public virtual void SetBombLimit(int bombLimit)
-    //{
-    //    this.bombLimit = bombLimit;
-    //}
 }

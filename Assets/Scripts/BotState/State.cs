@@ -11,7 +11,7 @@ public class State
 
     public enum STATE
     {
-        IDLE, CHASE, AVOID,
+        IDLE, CHASE, AVOID, FARM
     }
 
     public enum EVENT
@@ -65,6 +65,7 @@ public class Idle : State
 
     public override void Enter()
     {
+        Debug.Log("Idle");
         base.Enter();
     }
 
@@ -80,8 +81,12 @@ public class Idle : State
             nextState = new Chase(npc, agent, animator, player);
             stage = EVENT.EXIT;
         }
+        else if (StageManager.Instance.TileLocations.Count > 0)
+        {
+            nextState = new Farm(npc, agent, animator, player);
+            stage = EVENT.EXIT;
+        }
 
-        agent.ResetPath();
     }
 
     public override void Exit()
@@ -101,18 +106,35 @@ public class Chase : State
 
     public override void Enter()
     {
-
+        
+        Debug.Log("Chase");
         base.Enter();
     }
 
     public override void Update()
     {
-        agent.SetDestination(player.transform.position);
+        //agent.SetDestination(player.transform.position);
+        NavMeshPath path = new();
+        agent.CalculatePath(player.transform.position, path);
+
+        Debug.Log(path.status);
+
+        if (path.status == NavMeshPathStatus.PathComplete)
+        {
+            agent.SetDestination(player.transform.position);
+        }
+        else
+        {
+            nextState = new Idle(npc, agent, animator, player);
+            stage = EVENT.EXIT;
+        }
+
         if (avoidBoom.IsAvoid)
         {
             nextState = new Avoid(npc, agent, animator, player);
             stage = EVENT.EXIT;
-        }
+        } 
+        
     }
 
     public override void Exit()
@@ -134,6 +156,7 @@ public class Avoid : State
 
     public override void Enter()
     {
+        Debug.Log("Avoid");
         avoidBoom.MoveAgentOutOfCollider(agent);
 
         base.Enter();
@@ -144,6 +167,48 @@ public class Avoid : State
         if (!avoidBoom.IsAvoid)
         {
             nextState = new Idle(npc, agent, animator, player);
+            stage = EVENT.EXIT;
+        }
+    }
+
+    public override void Exit()
+    {
+
+        base.Exit();
+    }
+
+}
+
+public class Farm : State
+{
+
+    public Farm(GameObject _npc, NavMeshAgent _agent, Animator _animator, Transform _player)
+        : base(_npc, _agent, _animator, _player)
+    {
+        _name = STATE.FARM;
+    }
+
+    public override void Enter()
+    {
+        Debug.Log("Farm");
+
+        agent.SetDestination(StageManager.Instance.FindClosestTile(npc.transform.position));
+
+        Debug.Log(StageManager.Instance.FindClosestTile(npc.transform.position));
+
+        base.Enter();
+    }
+
+    public override void Update()
+    {
+        if (Vector3.Distance(npc.transform.position, agent.destination) <= 0.1)
+        {
+            npc.GetComponent<CharacterController>().PlaceBomb();
+        }
+
+        if (avoidBoom.IsAvoid)
+        {
+            nextState = new Avoid(npc, agent, animator, player);
             stage = EVENT.EXIT;
         }
     }
