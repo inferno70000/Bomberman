@@ -700,7 +700,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.2}
   serializedVersion: 2
   m_Radius: 0.5
 --- !u!50 &514409086
@@ -755,6 +755,7 @@ MonoBehaviour:
   speed: 5
   rigidbody2D: {fileID: 514409086}
   animator: {fileID: 98129119}
+  playerController: {fileID: 0}
 --- !u!114 &514409089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,6 +768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb05ee966fce36f4297c0f35d0a11e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   movement: {fileID: 514409088}
   speed: 5
   bombAmount: 1
